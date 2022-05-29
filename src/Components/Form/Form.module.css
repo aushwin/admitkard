@@ -50,3 +50,22 @@
     translate: -1px -2px;
     
 }
+
+.alert{
+    margin-top: 5rem;
+    border-radius: 0.2rem;
+    height: 10rem;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #dededf;
+}
+
+.alertSuccess{
+    border:#76c893 1px solid
+}
+
+.alertUpdated{
+    border: #facd79 1px solid;
+}

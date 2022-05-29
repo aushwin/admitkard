@@ -1,26 +1,30 @@
 import Styles from "./Form.module.css";
 import Select from "react-select";
 import axios from "axios";
+import {Spinner} from '../'
 import { colourStyles,colourStylesValid, options } from "./multi-select-config";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 const Form = () => {
   const errorColor = '#ff595e'
   const validColor = '#76c893'
   const [numberFlag,setNumberFlag] = useState(0)
   const [formValid,setFormValid] = useState(false)
+  const formRef = useRef()
   //Name 
   const [name,setName] = useState('')
   const [email,setEmail] = useState('')
   const [number,setNumber] = useState('')
   const [course,setCourse] = useState('')
   const [country,setCountry] = useState('')
-  const [dob,setDob] = useState('')
+  const [dob,setDob] = useState(' ')
+  const [alert,setAlert] = useState(null)
+  const [loading,setLoading] = useState(false)
   const [nameValid,setNameValid] = useState('')
   const [emailValid,setEmailValid] = useState('')
   const [numberValid,setNumberValid] = useState('')
   const [courseValid,setCourseValid] = useState('')
   const [countryValid,setCountryValid] = useState('')
-  const [dobValid,setDobValid] = useState('')
+  const [dobValid,setDobValid] = useState(' ')
   const onNameChangeHandler = (e)=>{
       setName(e.target.value)
       if (name.length>=3){
@@ -32,8 +36,11 @@ const Form = () => {
   useEffect(()=>{
     if(dob==='')
      setDobValid(false)
-    else
-     setDobValid(true)
+    else if(dob===' '){
+
+    }else{
+      setDobValid(true)
+    }
     if(country.length<1) setCountryValid(false)
     else setCountryValid(true)
 },[dob,country,setCountryValid])
@@ -86,8 +93,26 @@ useEffect(()=>{
       setDob(e.target.value)
   }
 
+  const clearState = ()=>{
+    setNumberFlag(0)
+    setFormValid(false)
+    setName('')
+    setEmail('')
+    setNumber('')
+    setCourse('')
+    setCountry('')
+    setDob('')
+    setNameValid('')
+    setEmailValid('')
+    setNumberValid('')
+    setCourseValid('')
+    setCountryValid('')
+    setDobValid(' ')
+  }
+
   const onFormSubmit = async(e)=>{
       e.preventDefault()
+      setLoading(true)
       const user = {
           name,
           email,
@@ -97,7 +122,17 @@ useEffect(()=>{
           dob
       }
       console.log(user)
-      await axios.post('http://localhost:4000/',user)
+      try{
+        const response = await axios.post('http://localhost:4000/users/',user)
+        setAlert(response.data.status)
+        setTimeout(()=>{
+          setAlert(null)
+          clearState()
+        },5000)
+      }catch(e){
+        console.log(e)
+      }
+      setLoading(false)
       
   }
 
@@ -106,7 +141,7 @@ useEffect(()=>{
   }
 
   return (
-    <form className={Styles.wrapper} onSubmit={onFormSubmit}>
+    <form className={Styles.wrapper} onSubmit={onFormSubmit} ref={formRef} >
       <input style={styleError(nameValid)} type="text" value={name} placeholder="Name" onChange={onNameChangeHandler} required />
       {!nameValid&&nameValid!==''&&<p className={Styles.errorMessage}>minimum 3 character</p>}
       <input style={styleError(emailValid)} type="email" placeholder="Email" value={email} onChange={onEmailChangeHandler} required/>
@@ -128,12 +163,17 @@ useEffect(()=>{
         isMulti
         options={options}
         required
+        value={country}
         onChange={onCountryChangeHandler}
       />
-      <input style={styleError(dobValid)} type="date" placeholder="DOB" value={dob} onChange={onDobChangeHandler} />
+      <input style={dobValid!==" " ? dobValid?{borderColor:validColor}:{borderColor:errorColor}:undefined} type="date" placeholder="DOB" value={dob} onChange={onDobChangeHandler} />
 
       <button disabled={!formValid} className={Styles.button}>Add</button>
-
+      <div className={`${Styles.alert} ${alert==='updated'&&Styles.alertUpdated} ${alert==='new' && Styles.alertSuccess}`}>
+        {loading && <Spinner/>}
+        {alert==='updated' && 'User updated successfully'}
+        {alert==='new' && 'User added successfully'}
+      </div>
     </form>
   );
 };
