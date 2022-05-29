@@ -3,7 +3,7 @@
     height: 100vh;
     padding-top: 1rem;
     display: flex;
-   
+ 
 }
 
 .messageWrapper {
@@ -11,7 +11,8 @@
     width: 30%;
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
+    gap: 0.5rem; 
+    transition-duration: 500ms;
 }
 
 .highlightMessage {
@@ -20,6 +21,7 @@
     color: #dededf;
     line-height: 4rem;
     letter-spacing: 0.2rem;
+    transition-duration: 500ms;
 }
 
 .textMessage {
@@ -30,8 +32,44 @@
 .formWrapper {
     /* background-color: coral; */
     flex-grow: 7;
-    
-
 }
 
+@media (max-width:900px)  { 
+    .wrapper {
+        flex-direction: column;
+    }
+    .highlightMessage{
+        opacity: 0;
+        visibility: collapse;
+    }
+    .messageWrapper{
+      transition: all;
+      transition-duration: 500ms;
+    }
+   }
+
+
+   @media (max-width:1350px)  { 
+    .highlightMessage{
+        font-size: 2rem;
+        line-height: 3rem;
+        transition-duration: 500ms;
+    }
+   }
+
+   @media (max-width:1350px)  { 
+    .highlightMessage{
+        font-size: 2rem;
+        line-height: 3rem;
+        transition-duration: 500ms;
+    }
+   }
+   @media (max-width:1125px)  { 
+   
+    .highlightMessage{
+        font-size: 1rem;
+        line-height: 2rem;
+        transition-duration: 500ms;
+    }
+   }
 

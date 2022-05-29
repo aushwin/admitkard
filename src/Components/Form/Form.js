@@ -1,5 +1,6 @@
 import Styles from "./Form.module.css";
 import Select from "react-select";
+import axios from "axios";
 import { colourStyles,colourStylesValid, options } from "./multi-select-config";
 import { useEffect, useState } from "react";
 const Form = () => {
@@ -14,7 +15,6 @@ const Form = () => {
   const [course,setCourse] = useState('')
   const [country,setCountry] = useState('')
   const [dob,setDob] = useState('')
-  const [user,setUser]= useState('')
   const [nameValid,setNameValid] = useState('')
   const [emailValid,setEmailValid] = useState('')
   const [numberValid,setNumberValid] = useState('')
@@ -34,14 +34,16 @@ const Form = () => {
      setDobValid(false)
     else
      setDobValid(true)
-},[dob])
+    if(country.length<1) setCountryValid(false)
+    else setCountryValid(true)
+},[dob,country,setCountryValid])
 
 useEffect(()=>{
-    if (nameValid===true &&emailValid ===true &&numberValid===true &&courseValid===true && countryValid===true && dobValid===true)
+    if (nameValid===true &&emailValid ===true &&numberValid===true &&courseValid===true && countryValid===true )
         setFormValid(true)
     else 
         setFormValid(false)
-}, [nameValid, emailValid, numberValid, courseValid, countryValid, dobValid])
+}, [nameValid, emailValid, numberValid, courseValid, countryValid])
 
   const emailValidationRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
   const onEmailChangeHandler = (e)=>{
@@ -73,8 +75,8 @@ useEffect(()=>{
   }
 
   const onCountryChangeHandler = (e)=>{
-    if(country.length===0){
-        setCountryValid('')
+    if(country.length<1){
+        setCountryValid(false)
     }
     setCountry(e)
     setCountryValid(true)
@@ -84,16 +86,18 @@ useEffect(()=>{
       setDob(e.target.value)
   }
 
-  const onFormSubmit = (e)=>{
+  const onFormSubmit = async(e)=>{
+      
       e.preventDefault()
-      setUser({
+      const user = {
           name,
           email,
           number,
           course,
           country,
           dob
-      })
+      }
+      await axios.post('http://localhost:4000/',user)
       console.log(user)
       
   }

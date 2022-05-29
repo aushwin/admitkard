@@ -14,14 +14,18 @@
     background-color: chocolate;
     width: 25%;
     height: 100%;
+    transition-duration: 500ms;
 }
 
-@media (max-width:600px)  { 
+@media (max-width:1600px)  { 
   .leftPane {
-      display: none;
+      width: 0%;
+      transition-duration: 500ms;
   }
 
   .rightPane {
       width: 100%;
+      transition-duration: 500ms;
+
   }
 }
