@@ -87,7 +87,6 @@ useEffect(()=>{
   }
 
   const onFormSubmit = async(e)=>{
-      
       e.preventDefault()
       const user = {
           name,
@@ -97,8 +96,8 @@ useEffect(()=>{
           country,
           dob
       }
-      await axios.post('http://localhost:4000/',user)
       console.log(user)
+      await axios.post('http://localhost:4000/',user)
       
   }
 
