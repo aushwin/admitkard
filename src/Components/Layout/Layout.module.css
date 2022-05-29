@@ -5,7 +5,7 @@
 }
 
 .rightPane {
-    background-color: red;
+    /* background-color: red; */
     width: 75%;
     height: 100%;
 }
@@ -15,6 +15,7 @@
     width: 25%;
     height: 100%;
     transition-duration: 500ms;
+    overflow: hidden;
 }
 
 @media (max-width:1600px)  { 
