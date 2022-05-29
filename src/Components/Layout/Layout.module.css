@@ -1,0 +1,27 @@
+.wrapper {
+    width: 100%;
+    height: 100%;
+    display: flex;
+}
+
+.rightPane {
+    background-color: red;
+    width: 70%;
+    height: 100%;
+}
+
+.leftPane {
+    background-color: chocolate;
+    width: 30%;
+    height: 100%;
+}
+
+@media (max-width:600px)  { 
+  .leftPane {
+      display: none;
+  }
+
+  .rightPane {
+      width: 100%;
+  }
+}
