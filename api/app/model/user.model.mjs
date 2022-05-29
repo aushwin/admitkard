@@ -29,4 +29,15 @@ const userSchema = new Schema(
 
     },{timestamps:true}
 )
+
+userSchema.statics.findUser =async  function  findUser (email,callback) {
+    try{
+        const response = await this.find({email})
+        if (response.length>0) return true
+        else return false
+    }catch(e){
+        return e
+    }
+}
+
 export const User = mongoose.model('User',userSchema)
