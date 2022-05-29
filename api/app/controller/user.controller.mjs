@@ -25,7 +25,8 @@ export const addUser = async(req,res) =>{
 }
 
 export const getUser = async(req,res)=>{
-    const {email} = req.body
+    const email = req.query.email
+    console.log(email)
     const user = await User.findOne({email})
     if(user){
         res.json({user:user})
