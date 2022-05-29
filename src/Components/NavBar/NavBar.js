@@ -1,9 +1,30 @@
-import Styles from './NavBar.module.css'
-const NavBar = ()=>{
-    return <ul className={Styles.wrapper} >
-       <li className={Styles.signUp}>SignUp</li>
-       <li className={Styles.lookUp}>LookUp</li>
+import { NavLink } from "react-router-dom";
+import Styles from "./NavBar.module.css";
+const NavBar = () => {
+  return (
+    <ul className={Styles.wrapper}>
+      <li>
+        <NavLink
+          to="/"
+          className={({ isActive }) =>
+            isActive ? Styles.navActive : Styles.navItem
+          }
+        >
+          Sign up
+        </NavLink>
+      </li>
+      <li>
+        <NavLink
+          to="/lookup"
+          className={({ isActive }) =>
+            isActive ? Styles.navActive : Styles.navItem
+          }
+        >
+          Look up
+        </NavLink>
+      </li>
     </ul>
-}
+  );
+};
 
-export default NavBar
+export default NavBar;
