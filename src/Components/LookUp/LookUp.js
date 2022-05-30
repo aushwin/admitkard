@@ -28,7 +28,7 @@ const LookUp = () => {
     setUser(null)
     setLoading(true)
     try{
-    const response = await axios.get('http://localhost:4000/users/',{params:{email}})
+    const response = await axios.get('https://admitkard-api-aushwin.herokuapp.com/users/',{params:{email}})
     console.log(response.data)
     setUser(response.data.user)
 
