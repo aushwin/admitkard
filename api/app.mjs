@@ -9,7 +9,7 @@ const app = express()
 app.use(json());   
 app.use(cors())
 
-app.get('/',(res,req)=>{
+app.get('/',(req,res)=>{
     res.json({
         "message": `weclome to the server running at port ${port}`
     })
