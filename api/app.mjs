@@ -8,6 +8,13 @@ const {json} = express
 const app = express()
 app.use(json());   
 app.use(cors())
+
+app.get('/',(res,req)=>{
+    res.json({
+        "message": `weclome to the server running at port ${port}`
+    })
+})
+
 app.use('/users',userRouter)
 
 dbConnect()
