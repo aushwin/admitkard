@@ -6,7 +6,7 @@ const LookUp = () => {
   const errorColor = "#ff595e";
   const validColor = "#76c893";
   const [email, setEmail] = useState("");
-  const [user,setUser] = useState(null)
+  const [user,setUser] = useState(undefined)
   const [loading,setLoading] = useState(false)
   const [emailValid, setEmailValid] = useState("");
   const emailValidationRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
@@ -25,11 +25,10 @@ const LookUp = () => {
 
   const onSubmitHandler = async(e) => {
     e.preventDefault();
-    setUser(null)
+    setUser(undefined)
     setLoading(true)
     try{
     const response = await axios.get('https://admitkard-api-aushwin.herokuapp.com/users/',{params:{email}})
-    console.log(response.data)
     setUser(response.data.user)
 
     }catch(e){
@@ -56,9 +55,10 @@ const LookUp = () => {
           </button>
         </form>
       </div>
-      <div className={Styles.alert}>
+      <div className={`${Styles.alert} ${user && Styles.alertFoundUser}`}>
         {loading &&<Spinner />}
         {user && <DisplayUser user={user} />}
+        {user===null && <div className={Styles.noUser}>No user with the provided email id</div>}
       </div>
     </div>
   );

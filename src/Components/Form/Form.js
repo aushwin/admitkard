@@ -126,7 +126,7 @@ const Form = () => {
       country,
       dob,
     };
-    console.log(user);
+    // console.log(user);
     try {
       const response = await axios.post("https://admitkard-api-aushwin.herokuapp.com/users/", user);
       setAlert(response.data.status);
